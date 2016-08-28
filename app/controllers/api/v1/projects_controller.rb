@@ -2,8 +2,14 @@ class Api::V1::ProjectsController < ApplicationController
 	respond_to :json
 
 	def show
-    respond_with Project.find(params[:id])
-  	end
+    response = []
+    project = Project.find(params[:id])
+    response << project
+    project.users.each do |x|
+      response << x
+    end
+    respond_with response
+  end
 
   def create
    project=Project.new(project_params) 

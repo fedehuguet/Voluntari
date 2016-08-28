@@ -1,9 +1,15 @@
 class Api::V1::OrganizationsController < ApplicationController
 	respond_to :json
 
-	def show
-    respond_with Organization.find(params[:id])
-  	end
+  def show
+    response = []
+    organization = Organization.find(params[:id])
+    response << organization
+    organization.projects.each do |x|
+      response << x
+    end
+    respond_with response
+  end
 
   def create
    organization=Organization.new(organization_params) 
