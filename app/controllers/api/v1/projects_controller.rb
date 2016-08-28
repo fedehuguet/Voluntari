@@ -17,7 +17,8 @@ class Api::V1::ProjectsController < ApplicationController
   end
 
   def create
-   project=Project.new(project_params) 
+   organization = Organization.find_by(name: organization_params[:name])
+   project= organization.projects.new(project_params) 
         # if the project is saved successfully than respond with json data and status code 201
         if project.save 
     render json: project, status: 201
@@ -64,5 +65,7 @@ end
   def project_params
    params.require(:project).permit(:name, :capacity, :description, :date, :free_spaces, :money_donated, :categories, :place)
   end
-
+  def organization_params
+    params.require(:organization).permit(:name)
+  end
 end
