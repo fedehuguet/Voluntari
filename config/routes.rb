@@ -10,6 +10,7 @@ Rails.application.routes.draw do
     	resources :projects do
     		post 'add_user_to_project', on: :member
         delete 'delete_user_from_project', on: :member
+        #post 'project_belongs', on: :member
     	end
     	resources :organizations
     end

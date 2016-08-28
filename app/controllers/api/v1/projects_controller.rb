@@ -1,9 +1,14 @@
 class Api::V1::ProjectsController < ApplicationController
 	respond_to :json
 
-	def show
+  def index
+    respond_with Project.all
+  end
+
+  def show
     response = []
     project = Project.find(params[:id])
+    response << project.organization
     response << project
     project.users.each do |x|
       response << x
@@ -48,6 +53,12 @@ def delete_user_from_project
   project = Project.find(params[:id])
   project.users.delete(User.find(params[:user_id]))
 end
+
+#def project_belongs
+  #project = Project.find(params[:id])
+  #organization = Organization.find(params[:organization_id])
+  #project.organization = organization
+#end
 
   private
   def project_params

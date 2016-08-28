@@ -1,6 +1,10 @@
 class Api::V1::OrganizationsController < ApplicationController
 	respond_to :json
 
+  def index
+    respond_with Organization.all
+  end
+
   def show
     response = []
     organization = Organization.find(params[:id])
@@ -36,6 +40,13 @@ class Api::V1::OrganizationsController < ApplicationController
     organization.destroy
     head 204
   end
+
+def add_project_to_organization
+  organization = Organization.find(params[:id])
+  project = Project.find(params[:project_id])
+  oj = OrganizationProject.find_or_create_by(project: project)
+  render json: oj, status: 200
+end
 
   private
   def organization_params
